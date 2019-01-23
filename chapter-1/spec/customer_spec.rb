@@ -7,20 +7,39 @@ module RentalApp
     let(:customer) { Customer.new('Iqbal') }
 
     describe 'Statement' do
-      context 'regular movie' do
+      describe 'regular movie' do
         let(:movie) { Movie.new('Pulp Fiction', Movie::REGULAR) }
 
-        it 'should return the correct statement result' do
-          rental = Rental.new(movie, 1)
-          customer.add_rental(rental)
+        context 'rented days <= 2' do
+          let(:rental) { Rental.new(movie, 1) }
 
-          expect(customer.statement).to eq(
-            "Rental Record for Iqbal\n" +
-            "\tPulp Fiction\t2\n" +
-            "Amount owed is 2\n" +
-            "You earned 1 frequent renter points"
-          )
+          it 'should return the correct statement result' do
+            customer.add_rental(rental)
+
+            expect(customer.statement).to eq(
+              "Rental Record for Iqbal\n" +
+              "\tPulp Fiction\t2\n" +
+              "Amount owed is 2\n" +
+              "You earned 1 frequent renter points"
+            )
+          end
         end
+
+        context 'rented days > 2' do
+          let(:rental) { Rental.new(movie, 3) }
+
+          it 'should return the correct statement result' do
+            customer.add_rental(rental)
+
+            expect(customer.statement).to eq(
+              "Rental Record for Iqbal\n" +
+              "\tPulp Fiction\t3.5\n" +
+              "Amount owed is 3.5\n" +
+              "You earned 1 frequent renter points"
+            )
+          end
+        end
+
       end
 
       context 'new release movie' do
