@@ -49,6 +49,7 @@ module RentalApp
         this_amount += (element.days_rented - 3) * 1.5 if element.days_rented > 3
       end
 
+      this_amount
     end
   end
 end
