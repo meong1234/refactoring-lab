@@ -7,6 +7,10 @@ module RentalApp
       @rentals = []
     end
 
+    def add_rental(arg)
+      @rentals << arg
+    end
+
     def statement
       total_amount, frequent_renter_points = 0, 0
       result = "Rental Record for #{@name}\n"
